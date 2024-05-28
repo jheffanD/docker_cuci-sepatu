@@ -1,0 +1,25 @@
+# version: '3.8'
+
+# Set up network
+networks:
+  react-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.99.0/24
+
+# Set up services
+services:
+  front:
+    container_name: "cuci-sepatu"
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: 
+    networks:
+      - react-net
