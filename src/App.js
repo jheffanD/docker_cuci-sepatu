@@ -1,13 +1,10 @@
-
-import './App.css';
+import Navbar from "./componen/navbar";
 
 function App() {
   return (
-    <main>
-      <h1 className="text-4-xl text-indigo-500">
-        react mas
-      </h1>
-    </main>
+    <div className="bg-slate-700 bg-center w-auto h-20">
+      <Navbar/>
+    </div>
   );
 }
 
