@@ -23,20 +23,17 @@ FROM node:18-alpine
 # Tentukan direktori kerja di dalam container
 WORKDIR /app
 
-# Menyalin hasil build dari stage sebelumnya
-COPY --from=build /app/build ./build
-
-# Menyalin package.json dan package-lock.json untuk produksi
-COPY --from=build /app/package*.json ./
-
 # Menginstal server statis seperti serve
 RUN npm install -g serve
 
+# Menyalin hasil build dari stage sebelumnya
+COPY --from=build /app/build ./build
 
 # Mengekspos port yang digunakan oleh aplikasi
 EXPOSE 3000
 
+
 # Menjalankan server
-CMD ["npm", "start"]
+CMD ["serve", "-s", "build", "-l", "3000"]
 
 LABEL maintainer="jheffan451@gmail.com"
