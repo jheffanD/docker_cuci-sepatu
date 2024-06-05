@@ -1,13 +1,12 @@
-// import Navbar from "./componen/navbar";
+import Dashboard from './pages/Dashboard/page';
+import RootLayout from './layout';
 
 export default function App() {
   return (
-    <div className="flex bg-slate-300 h-screen">
-      <div className="bg-slate-600 h-14  w-[80rem]">
-        <div>
-        </div>
-      </div>
-   </div>
+    <RootLayout>
+      <Dashboard/>
+    </RootLayout>
+
   );
 }
 
