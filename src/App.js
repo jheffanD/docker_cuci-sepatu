@@ -1,11 +1,12 @@
-import Navbar from "./componen/navbar";
+import Dashboard from './pages/Dashboard/page';
+import RootLayout from './layout';
 
-function App() {
+export default function App() {
   return (
-    <div className="bg-slate-700 bg-center w-auto h-20">
-      <Navbar/>
-    </div>
+    <RootLayout>
+      <Dashboard/>
+    </RootLayout>
   );
 }
 
-export default App;
+
