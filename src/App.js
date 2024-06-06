@@ -1,14 +1,12 @@
+import Dashboard from './pages/Dashboard/page';
+import RootLayout from './layout';
 
-import './App.css';
-
-function App() {
+export default function App() {
   return (
-    <main>
-      <h1 className="text-4-xl text-indigo-500">
-        react mas
-      </h1>
-    </main>
+    <RootLayout>
+      <Dashboard/>
+    </RootLayout>
   );
 }
 
-export default App;
+
