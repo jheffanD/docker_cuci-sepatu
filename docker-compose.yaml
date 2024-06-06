@@ -1,0 +1,25 @@
+# version: '3.8'
+
+# Set up network
+networks:
+  react-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.99.0/24
+
+# Set up services
+services:
+  front:
+    container_name: "cuci-sepatu"   # Nama container
+    build: 
+      context: .                    # Direktori saat ini sebagai konteks build
+      dockerfile: Dockerfile        # Dockerfile yang digunakan
+    ports:
+      - "3000:3000"                   # Mengekspos port 3000 container 
+    restart: always                 # Kebijakan restart selalu
+    volumes:
+      - .:/app                      # Memetakan direktori saat ini ke /app di dalam container
+      - /app/node_modules           # Volume untuk node_modules, mencegah overwrite
+    networks:
+      - react-net                   # Menghubungkan ke jaringan react-net
