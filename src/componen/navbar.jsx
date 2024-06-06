@@ -1,9 +1,7 @@
 import Icon from "../asset/docker.svg";
 import Home from "../asset/home1.svg";
-import { useState } from "react";
 
 export default function Navbar() {
-  const [toggel, settoggel] = useState(false);
 
   return (
     <>
