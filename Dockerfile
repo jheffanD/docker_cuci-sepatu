@@ -32,7 +32,6 @@ COPY --from=build /app/build ./build
 # Mengekspos port yang digunakan oleh aplikasi
 EXPOSE 3000
 
-
 # Menjalankan server
 CMD ["serve", "-s", "build", "-l", "3000"]
 

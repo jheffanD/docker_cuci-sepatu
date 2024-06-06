@@ -6,7 +6,6 @@ export default function App() {
     <RootLayout>
       <Dashboard/>
     </RootLayout>
-
   );
 }
 

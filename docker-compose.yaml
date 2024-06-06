@@ -16,7 +16,7 @@ services:
       context: .                    # Direktori saat ini sebagai konteks build
       dockerfile: Dockerfile        # Dockerfile yang digunakan
     ports:
-      - "3000:3000"                   # Mengekspos port 3000 container ke port 80 host
+      - "3000:3000"                   # Mengekspos port 3000 container 
     restart: always                 # Kebijakan restart selalu
     volumes:
       - .:/app                      # Memetakan direktori saat ini ke /app di dalam container
