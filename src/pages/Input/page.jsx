@@ -43,11 +43,11 @@ export default function Input() {
               name="membership"
             >
               <option value="" disabled selected>
-                Select your option
+                {/* Select your option */}
               </option>
-              <option value="silver">Silver</option>
-              <option value="platinum">Platinum</option>
-              <option value="gold">Gold</option>
+              <option value="silver">Biasa</option>
+              <option value="platinum">Lumayan</option>
+              <option value="gold">Bagus</option>
             </select>
           </div>
           <div className="w-full xl:w-1/2 px-4">
@@ -62,7 +62,7 @@ export default function Input() {
               name="jenis"
             >
               <option value="" disabled selected>
-                Select your option
+                {/* Select your option */}
               </option>
               <option value="canvas">Canvas</option>
               <option value="katun">Katun</option>
