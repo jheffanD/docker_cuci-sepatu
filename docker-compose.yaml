@@ -1,12 +1,25 @@
-# version: '3.8'
+version: "3.8"
 
-# Set up network
+# Set up networks
 networks:
   react-net:
+    driver: bridge
     ipam:
       driver: default
       config:
         - subnet: 172.20.99.0/24
+          gateway: 172.20.99.1
+    internal: false
+  
+  data-net:
+    driver: bridge
+    ipam:
+      driver: default
+      config: 
+        - subnet: 172.20.100.0/24
+          gateway: 172.20.100.1
+    internal: true 
+
 
 # Set up services
 services:
@@ -21,7 +34,23 @@ services:
     volumes:
       - .:/app                      # Memetakan direktori saat ini ke /app di dalam container
       - /app/node_modules           # Volume untuk node_modules, mencegah overwrite
+    depends_on:
+      - data_base
     networks:
-      - react-net                   # Menghubungkan ke jaringan react-net
+      - react-net
+      - data-net                   # Menghubungkan ke jaringan react-net
 
-
+  data_base:
+    container_name: "data_cuci-sepatu"
+    build:
+      context: .
+      dockerfile: ./Docker/Docker.mysql
+    volumes:
+      - .:/scripts
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    env_file:
+      - ./env/mysql.env
+    ports:
+      - "3306:3306"                   # Mengekspos port 3306 container 
+    networks:
+      - data-net

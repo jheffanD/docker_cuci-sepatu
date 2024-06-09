@@ -11,11 +11,5 @@ FROM mysql:8.0
 # Copy initialization scripts from builder stage
 COPY --from=build /docker-entrypoint-initdb.d /docker-entrypoint-initdb.d
 
-# Set environment variables
-ENV MYSQL_ROOT_PASSWORD=root
-ENV MYSQL_DATABASE=cuci_sepatu
-ENV MYSQL_USER=cuci
-ENV MYSQL_PASSWORD=sepatu
-
 # Expose MySQL port
 EXPOSE 3306

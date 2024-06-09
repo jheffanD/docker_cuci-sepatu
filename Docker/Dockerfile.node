@@ -28,11 +28,13 @@ RUN npm install -g serve
 
 # Menyalin hasil build dari stage sebelumnya
 COPY --from=build /app/build ./build
+COPY --from=build /app/build package.json ./
+COPY --from=build /app/build package-lock.json ./
 
 # Mengekspos port yang digunakan oleh aplikasi
 EXPOSE 3000
 
 # Menjalankan server
-CMD ["serve", "-s", "build", "-l", "3000"]
+CMD ["npm",  "start"]
 
 LABEL maintainer="jheffan451@gmail.com"
