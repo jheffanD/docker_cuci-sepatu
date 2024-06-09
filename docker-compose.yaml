@@ -37,7 +37,6 @@ services:
     depends_on:
       - data_base
     networks:
-      - react-net
       - data-net                   # Menghubungkan ke jaringan react-net
 
   data_base:
@@ -54,3 +53,16 @@ services:
       - "3306:3306"                   # Mengekspos port 3306 container 
     networks:
       - data-net
+
+  nginx:
+    container_name: "nginx-cuci-sepatu"
+    build:
+      context: .
+      dockerfile: ./Docker/nginx.Dockerfile
+    ports:
+      - "8080:80"
+    restart: always
+    depends_on:
+      - front
+    networks:
+      - react-net
