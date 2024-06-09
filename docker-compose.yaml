@@ -11,10 +11,10 @@ networks:
 # Set up services
 services:
   front:
-    container_name: "cuci-sepatu"   # Nama container
+    container_name: "front-cuci-sepatu"   # Nama container
     build: 
       context: .                    # Direktori saat ini sebagai konteks build
-      dockerfile: Dockerfile        # Dockerfile yang digunakan
+      dockerfile: ./Docker/Dockerfile.node
     ports:
       - "3000:3000"                   # Mengekspos port 3000 container 
     restart: always                 # Kebijakan restart selalu
@@ -23,3 +23,5 @@ services:
       - /app/node_modules           # Volume untuk node_modules, mencegah overwrite
     networks:
       - react-net                   # Menghubungkan ke jaringan react-net
+
+
