@@ -1,4 +1,5 @@
-version: "3.8"
+# version: '3.9'
+
 
 # Set up networks
 networks:
@@ -19,38 +20,37 @@ networks:
         - subnet: 172.20.100.0/24
           gateway: 172.20.100.1
     internal: true 
-
+  
 
 # Set up services
 services:
   front:
-    container_name: "front-cuci-sepatu"   # Nama container
+    container_name: "front-cuci-sepatu"   
     build: 
-      context: .                    # Direktori saat ini sebagai konteks build
-      dockerfile: ./Docker/Dockerfile.node
-    ports:
-      - "3000:3000"                   # Mengekspos port 3000 container 
-    restart: always                 # Kebijakan restart selalu
+      context: .                
+      dockerfile: ./Docker/Dockerfile.node            
+    restart: always              
     volumes:
-      - .:/app                      # Memetakan direktori saat ini ke /app di dalam container
-      - /app/node_modules           # Volume untuk node_modules, mencegah overwrite
+      - .:/app                     
+      - /app/node_modules
     depends_on:
       - data_base
     networks:
-      - data-net                   # Menghubungkan ke jaringan react-net
+      - react-net   
+      - data-net
+
+
 
   data_base:
     container_name: "data_cuci-sepatu"
     build:
       context: .
-      dockerfile: ./Docker/Docker.mysql
+      dockerfile: ./Docker/Dockerfile.mysql
     volumes:
       - .:/scripts
       - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
     env_file:
       - ./env/mysql.env
-    ports:
-      - "3306:3306"                   # Mengekspos port 3306 container 
     networks:
       - data-net
 

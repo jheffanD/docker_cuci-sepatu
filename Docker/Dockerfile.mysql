@@ -3,13 +3,14 @@ FROM mysql:8.0 AS build
 #set wrorking directory
 WORKDIR /scripts
 
-COPY  ./sql /docker-entrypoint-initdb.d ./
+# Salin skrip SQL ke direktori docker-entrypoint-initdb.d
+COPY ./sql /docker-entrypoint-initdb.d
 
 # Stage 2: Final image
 FROM mysql:8.0
 
-# Copy initialization scripts from builder stage
+# Salin skrip inisialisasi dari tahap build
 COPY --from=build /docker-entrypoint-initdb.d /docker-entrypoint-initdb.d
 
-# Expose MySQL port
-EXPOSE 3306
+# # Expose MySQL port
+# EXPOSE 3306
