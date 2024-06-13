@@ -5,8 +5,7 @@ FROM node:18-alpine AS build
 WORKDIR /app
 
 # Menyalin package.json dan package-lock.json ke direktori kerja
-COPY package.json ./
-COPY package-lock.json ./
+COPY package.json package-lock.json ./
 
 # Menginstal dependensi proyek
 RUN npm install 
@@ -24,16 +23,10 @@ FROM node:18-alpine
 # # Tentukan direktori kerja di dalam container
 WORKDIR /app
 
-# Menginstal server statis seperti serve
-RUN npm install -g serve
-
 # Menyalin hasil build dari stage sebelumnya
 COPY --from=build /app/build ./build
-COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/package.json .
-
-# Mengekspos port yang digunakan oleh aplikasi
-# EXPOSE 3000
+COPY --from=build /app/node_modules ./node_modules
 
 # Menjalankan server                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
 CMD ["npm", "start"]

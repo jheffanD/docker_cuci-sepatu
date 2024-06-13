@@ -27,8 +27,9 @@ services:
   front:
     container_name: "front-cuci-sepatu"   
     build: 
-      context: .  
-      dockerfile: ./Docker/Dockerfile.node            
+      context: .                
+      dockerfile: ./Docker/Dockerfile.node
+      no_cache: true            
     restart: always             
     volumes:
       - .:/app                     
@@ -44,13 +45,14 @@ services:
           action: sync
           target: ./Docker/dockerfile.node
           ignore: 
-            - node_modules
+            - node_modules/
 
   data_base:
     container_name: "mysql_db"
     build:
       context: .
       dockerfile: ./Docker/Dockerfile.mysql
+      no_cache: true 
     volumes:
       - .:/scripts
       - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -64,6 +66,7 @@ services:
     build:
       context: .
       dockerfile: ./Docker/nginx.Dockerfile
+      no_cache: true 
     ports:
       - "8080:80"
     restart: always
