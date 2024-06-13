@@ -1,0 +1,79 @@
+# version: '3.9'
+
+
+# Set up networks
+networks:
+  react-net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.99.0/24
+          gateway: 172.20.99.1
+    internal: false
+  
+  data-net:
+    driver: bridge
+    ipam:
+      driver: default
+      config: 
+        - subnet: 172.20.100.0/24
+          gateway: 172.20.100.1
+    internal: true 
+  
+
+# Set up services
+services:
+  front:
+    container_name: "front-cuci-sepatu"   
+    build: 
+      context: .                
+      dockerfile: ./Docker/Dockerfile.node
+      no_cache: true            
+    restart: always             
+    volumes:
+      - .:/app                     
+      - /app/node_modules
+    depends_on:
+      - data_base
+    networks:   
+      - data-net
+      - react-net
+    develop:
+      watch:
+        - path: ./src/pages
+          action: sync
+          target: ./Docker/dockerfile.node
+          ignore: 
+            - node_modules/
+
+  data_base:
+    container_name: "mysql_db"
+    build:
+      context: .
+      dockerfile: ./Docker/Dockerfile.mysql
+      no_cache: true 
+    volumes:
+      - .:/scripts
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    env_file:
+      - ./env/mysql.env
+    networks:
+      - data-net
+
+  nginx:
+    container_name: "nginx-cuci-sepatu"
+    build:
+      context: .
+      dockerfile: ./Docker/nginx.Dockerfile
+      no_cache: true 
+    ports:
+      - "8080:80"
+    restart: always
+    volumes:
+      - ./build:/usr/share/nginx/html
+    depends_on:
+      - front
+      - data_base
+    networks:
+      - react-net

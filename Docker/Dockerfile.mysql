@@ -1,0 +1,13 @@
+FROM mysql:8.0 AS build
+
+#set wrorking directory
+WORKDIR /scripts
+
+# Salin skrip SQL ke direktori docker-entrypoint-initdb.d
+COPY ./sql /docker-entrypoint-initdb.d
+
+# Stage 2: Final image
+FROM mysql:8.0
+
+# Salin skrip inisialisasi dari tahap build
+COPY --from=build /docker-entrypoint-initdb.d /docker-entrypoint-initdb.d
