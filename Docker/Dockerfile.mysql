@@ -11,6 +11,3 @@ FROM mysql:8.0
 
 # Salin skrip inisialisasi dari tahap build
 COPY --from=build /docker-entrypoint-initdb.d /docker-entrypoint-initdb.d
-
-# # Expose MySQL port
-# EXPOSE 3306

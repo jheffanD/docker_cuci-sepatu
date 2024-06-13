@@ -3,11 +3,11 @@ FROM nginx:stable-alpine
 # Copy custom Nginx configuration file
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
-# Copy build files from the React app
+# Copy build files from React app
 COPY ./build /usr/share/nginx/html
 
-#expose port nginx
+# Expose port 80
 EXPOSE 80
 
-# Perintah untuk menjalankan Nginx
+# Run command to start Nginx
 CMD ["nginx", "-g", "daemon off;"]

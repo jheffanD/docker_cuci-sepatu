@@ -27,22 +27,27 @@ services:
   front:
     container_name: "front-cuci-sepatu"   
     build: 
-      context: .                
+      context: .  
       dockerfile: ./Docker/Dockerfile.node            
-    restart: always              
+    restart: always             
     volumes:
       - .:/app                     
       - /app/node_modules
     depends_on:
       - data_base
-    networks:
-      - react-net   
+    networks:   
       - data-net
-
-
+      - react-net
+    develop:
+      watch:
+        - path: ./src/pages
+          action: sync
+          target: ./Docker/dockerfile.node
+          ignore: 
+            - node_modules
 
   data_base:
-    container_name: "data_cuci-sepatu"
+    container_name: "mysql_db"
     build:
       context: .
       dockerfile: ./Docker/Dockerfile.mysql
@@ -62,7 +67,10 @@ services:
     ports:
       - "8080:80"
     restart: always
+    volumes:
+      - ./build:/usr/share/nginx/html
     depends_on:
       - front
+      - data_base
     networks:
       - react-net
